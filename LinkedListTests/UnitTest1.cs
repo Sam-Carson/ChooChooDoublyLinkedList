@@ -40,6 +40,28 @@ namespace LinkedListTests
     }
 
     [TestClass]
+    public class InsertLast_Should
+    {
+        [TestMethod]
+        public void ReplaceExistingLastNode_WhenALastNodeExists()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> nodeNew;
+            LinkedListNode<string> nodeOld;
+
+            nodeOld = list.InsertFirst(new LinkedListNode<string>("OriginalLast"));
+
+            //Act
+            nodeNew = list.InsertLast(new LinkedListNode<string>("LastLast"));
+
+            //Assert
+            Assert.AreEqual(nodeNew.Prev, nodeOld);
+
+        }
+    }
+
+    [TestClass]
     public class InsertAfter_Should
     {
         [TestMethod]

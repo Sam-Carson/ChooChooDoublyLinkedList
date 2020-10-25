@@ -36,7 +36,6 @@ namespace CustomLinkedList
             //else if the list is not null, newNode.Next gets pointed at 'First', this puts it in the 'First' position.
             //then assign the LinkedList<T>.First to the newNode. Now the newNode is 'First' in the LinkedList<t>.
 
-
             //LinkedListNode<T> newNode = new LinkedListNode<T>(newNodeValue);
             if (First == null || this.Count == 0)
             {
@@ -52,7 +51,24 @@ namespace CustomLinkedList
             }
             Count++;
             return newNode;
+        }
 
+        public LinkedListNode<T> InsertLast(LinkedListNode<T> newNode)
+        {
+            if (Last == null || this.Count == 0)
+            {
+                First = newNode;
+                Last = newNode;
+            }
+            else
+            {
+                newNode.Prev = Last;
+                newNode.Next = null;
+                newNode.Prev.Next = newNode;
+                Last = newNode;
+            }
+
+            return newNode;
         }
 
         //When inserting a newNode behind an existingNode
@@ -115,7 +131,7 @@ namespace CustomLinkedList
             }
             else if(Last == doomedNode)
             {
-                RemoveLast();
+                //RemoveLast();
             }
             else
             {
