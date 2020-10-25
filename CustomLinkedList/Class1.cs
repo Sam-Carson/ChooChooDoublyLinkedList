@@ -61,6 +61,20 @@ namespace CustomLinkedList
         //Count is incremented to account for the additional node
         public LinkedListNode<T> InsertAfter(LinkedListNode<T> newNode, LinkedListNode<T> existingNode)
         {
+            if (existingNode == Last)
+            {
+                InsertLast(newNode);
+            }
+            else
+            {
+                newNode.Next = existingNode.Next;
+                newNode.Prev = existingNode;
+                if (newNode.Next != null)
+                {
+                    newNode.Next.Prev = newNode;
+                    existingNode.Next = newNode;
+                }
+            }
             newNode.Next = existingNode.Next;
             existingNode.Next = newNode;
             Count++;
@@ -94,29 +108,23 @@ namespace CustomLinkedList
 
         public LinkedListNode<T> Remove(LinkedListNode<T> doomedNode)
         {
-            LinkedListNode<T> curr;
-            LinkedListNode<T> prev;
             if (First == null) return null;
             if (First == doomedNode)
             {
-                curr = RemoveFirst();
-                return curr;
+                RemoveFirst();
             }
-
-            prev = First;
-            curr = prev.Next;
-            while (curr != null && curr != doomedNode)
+            else if(Last == doomedNode)
             {
-                prev = curr;
-                curr = curr.Next;
+                RemoveLast();
             }
-
-            if (curr != null)
+            else
             {
-                prev.Next = curr.Next;
-                Count--;
+                doomedNode.Next.Prev = doomedNode.Prev;
+                doomedNode.Prev.Next = doomedNode.Next;
+                doomedNode.Next = null;
+                doomedNode.Prev = null;
             }
-            return curr;
+            return doomedNode;
         }
 
         public void Clear()
