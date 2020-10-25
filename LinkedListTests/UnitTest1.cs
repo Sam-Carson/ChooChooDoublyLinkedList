@@ -57,7 +57,34 @@ namespace LinkedListTests
 
             //Assert
             Assert.AreEqual(nodeNew.Prev, nodeOld);
+        }
 
+        [TestMethod]
+        public void AddNewFirstNode_WhenListIsEmpty()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> nodeNew;
+
+            //Act
+            nodeNew = list.InsertLast(new LinkedListNode<string>("Last"));
+
+            //Assert
+            Assert.AreEqual(list.First, nodeNew);
+        }
+
+        [TestMethod]
+        public void AddNewBackNode_WhenListIsEmpty()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> nodeNew;
+
+            //Act
+            nodeNew = list.InsertLast(new LinkedListNode<string>("Last"));
+
+            //Assert
+            Assert.AreEqual(list.Last, nodeNew);
         }
     }
 
@@ -182,6 +209,30 @@ namespace LinkedListTests
             Assert.AreEqual(null, result);
             Assert.AreEqual(0, list.Count);
 
+        }
+    }
+
+    [TestClass]
+    public class RemoveLast_Should
+    {
+        [TestMethod]
+        public void ChangeLastPointer_WhereThereIsSomethingToRemove()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> workNode;
+
+            workNode = list.InsertFirst(new LinkedListNode<string>("One"));
+            workNode = list.InsertAfter(new LinkedListNode<string>("Two"), workNode);
+            list.InsertAfter(new LinkedListNode<string>("Three"), workNode);
+            int count = list.Count;
+
+            //Act
+            list.RemoveLast();
+
+            //Assert
+            Assert.AreEqual(list.Last.Data, "Two");
+            Assert.AreEqual(count - 1, list.Count);
         }
     }
 

@@ -67,7 +67,6 @@ namespace CustomLinkedList
                 newNode.Prev.Next = newNode;
                 Last = newNode;
             }
-
             return newNode;
         }
 
@@ -98,6 +97,28 @@ namespace CustomLinkedList
             return newNode;
         }
 
+        public LinkedListNode<T> InsertBefore(LinkedListNode<T> newNode, LinkedListNode<T> existingNode)
+        {
+            if (existingNode == First)
+            {
+                InsertFirst(newNode);
+            }
+            else
+            {
+                newNode.Prev = existingNode.Prev;
+                newNode.Next = existingNode;
+                if (newNode.Prev != null)
+                {
+                    newNode.Prev.Next = newNode;
+                    existingNode.Prev = newNode;
+                }
+            }
+
+            Count++;
+
+            return newNode;
+        }
+
         //Find: Do a linear search of the list to locate a node with the value of the nodeValue parameter.  This will work for parameters of simple data types
         //such as int, double, decimal and string, but not for more complex objects unless those objects have an overloaded "Equals" or "==" operator.
         public LinkedListNode<T> Find(T nodeValue)
@@ -122,6 +143,17 @@ namespace CustomLinkedList
             return doomedNode;
         }
 
+        public LinkedListNode<T> RemoveLast()
+        {
+            if (First == null || Count == 0) return null;
+
+            LinkedListNode<T> doomedNode = Last;
+            Last = Last.Prev;
+            Last.Next = null;
+            Count--;
+            return doomedNode;
+        }
+
         public LinkedListNode<T> Remove(LinkedListNode<T> doomedNode)
         {
             if (First == null) return null;
@@ -131,7 +163,7 @@ namespace CustomLinkedList
             }
             else if(Last == doomedNode)
             {
-                //RemoveLast();
+                RemoveLast();
             }
             else
             {
