@@ -114,9 +114,7 @@ namespace CustomLinkedList
                     existingNode.Prev = newNode;
                 }
             }
-
             Count++;
-
             return newNode;
         }
 
@@ -161,6 +159,7 @@ namespace CustomLinkedList
             if (First == doomedNode)
             {
                 RemoveFirst();
+                Count++;
             }
             else if(Last == doomedNode)
             {

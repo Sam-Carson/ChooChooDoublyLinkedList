@@ -110,7 +110,9 @@ namespace ChooChoo
             {
                 WriteLine("\nWhere do you want to move it?  " +
                     "\n1. Front of train" +
-                    "\n2. Behind a specific car" +
+                    "\n2. Back of train" +
+                    "\n3. Behind a specific car" +
+                    "\n4. Ahead of a specfic car" +
                     "\n\nor X to cancel the move.");
                 Write("==> ");
 
@@ -137,7 +139,15 @@ namespace ChooChoo
                         ListCars(railcars);
 
                     }
-                    else if (inputCommand == "2")  //Move after car
+                    else if (inputCommand == "2")
+                    {
+                        valid = true;
+                        railcars.InsertLast(railcars.Remove(car));
+
+                        WriteLine($"{car.Data} moved to back of train.\n");
+                        ListCars(railcars);
+                    }
+                    else if (inputCommand == "3")  //Move after car
                     {
                         Write("Enter car name to move after ==> ");
                         inputCar = ReadLine().ToUpper();
@@ -154,6 +164,27 @@ namespace ChooChoo
                         {
                             valid = true;
                             railcars.InsertAfter(railcars.Remove(car), targetCar);  //Same principle as for InsertFirst, above.
+                            WriteLine($"{car.Data} moved after {targetCar.Data}.\n");
+                            ListCars(railcars);
+                        }
+                    }
+                    else if (inputCommand == "4")
+                    {
+                        Write("Enter car name to move ahead ==> ");
+                        inputCar = ReadLine().ToUpper();
+                        targetCar = railcars.Find(inputCar);
+                        if (targetCar == null)
+                        {
+                            WriteLine("No such car.  Try again.");
+                        }
+                        else if (car == targetCar)
+                        {
+                            WriteLine("Um...you're trying to move a car relative to itself.  Doesn't make sense.");
+                        }
+                        else
+                        {
+                            valid = true;
+                            railcars.InsertBefore(railcars.Remove(car), targetCar);  //Same principle as for InsertFirst, above.
                             WriteLine($"{car.Data} moved after {targetCar.Data}.\n");
                             ListCars(railcars);
                         }
