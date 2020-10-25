@@ -17,12 +17,6 @@ namespace CustomLinkedList
 
     }
 
-    //Creating the LinkedList<T>
-    //Steps into InsertFirst method by passing in the users requested cart
-    //if the First 'LinkedList<T> is null or count is zero it is empty and adds the node to the 'front' of the list.
-    //else if their are nodes in the LinkedList<T>, the node gets set as a newNode assigned with the 'next' address from the prior node.
-    //The Count of the LinkedList<T> gets incremented to account for the newly added node. 
-    //The nexNode gets returned to be listed in the terminal
     public class CustomLinkedList<T>
     {
         public LinkedListNode<T> First { get; private set; }    //Private set: First can only be modified within the class.
@@ -31,12 +25,6 @@ namespace CustomLinkedList
         public int Count { get; private set; } = 0;
         public LinkedListNode<T> InsertFirst(LinkedListNode<T> newNode)
         {
-            //When inserting a cart at the beginning of the list
-            //check if the list is empty, if so, the newNode is placed at the beginning of the list. Both the 'First' and 'Last' pointers point here.
-            //else if the list is not null, newNode.Next gets pointed at 'First', this puts it in the 'First' position.
-            //then assign the LinkedList<T>.First to the newNode. Now the newNode is 'First' in the LinkedList<t>.
-
-            //LinkedListNode<T> newNode = new LinkedListNode<T>(newNodeValue);
             if (First == null || this.Count == 0)
             {
                 First = newNode;
@@ -71,10 +59,6 @@ namespace CustomLinkedList
             return newNode;
         }
 
-        //When inserting a newNode behind an existingNode
-        //Set the existingNode.Next to the newNode.Next because it is taking that address
-        //The newNode is then set to the existingNode.Next position
-        //Count is incremented to account for the additional node
         public LinkedListNode<T> InsertAfter(LinkedListNode<T> newNode, LinkedListNode<T> existingNode)
         {
             if (existingNode == Last)
@@ -91,8 +75,6 @@ namespace CustomLinkedList
                     existingNode.Next = newNode;
                 }
             }
-            newNode.Next = existingNode.Next;
-            existingNode.Next = newNode;
             Count++;
 
             return newNode;
@@ -118,8 +100,6 @@ namespace CustomLinkedList
             return newNode;
         }
 
-        //Find: Do a linear search of the list to locate a node with the value of the nodeValue parameter.  This will work for parameters of simple data types
-        //such as int, double, decimal and string, but not for more complex objects unless those objects have an overloaded "Equals" or "==" operator.
         public LinkedListNode<T> Find(T nodeValue)
         {
             LinkedListNode<T> currNode = First;
@@ -169,8 +149,6 @@ namespace CustomLinkedList
             {
                 doomedNode.Next.Prev = doomedNode.Prev;
                 doomedNode.Prev.Next = doomedNode.Next;
-                doomedNode.Next = null;
-                doomedNode.Prev = null;
             }
             Count--;
             return doomedNode;
@@ -179,6 +157,7 @@ namespace CustomLinkedList
         public void Clear()
         {
             First = null;
+            Last = null;
             Count = 0;
         }
     }

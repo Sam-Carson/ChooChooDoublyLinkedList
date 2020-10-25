@@ -38,7 +38,7 @@ namespace ChooChoo
                         break;
                     case "1":
                     case "A":
-                        AddRailCar(railcars, ref carCount); //plug in InsertLast();
+                        AddRailCar(railcars, ref carCount); 
                         break;
                     case "2":
                     case "M":
@@ -60,7 +60,6 @@ namespace ChooChoo
                         railcars.Clear();
                         WriteLine("They're gone.  Every last one of them.");
                         break;
-
                 }
 
             }
@@ -247,7 +246,6 @@ namespace ChooChoo
             }
             else
             {
-                //below turnary operator address the use of car as singular or plural
                 WriteLine($"\nThe train currently has {railcars.Count} {(railcars.Count == 1 ? "car." : "cars")}");
                 WriteLine("\n***FRONT***\n");
                 do
@@ -329,7 +327,7 @@ namespace ChooChoo
         {
             bool valid = false;
             string input = "";
-            string[] valids = { "1", "2", "3", "4", "5", "Q", "A", "M", "R", "L" };
+            string[] valids = { "1", "2", "3", "4", "5", "6", "Q", "A", "M", "R", "L", "RL" };
             while (!valid)
             {
                 WriteLine("\nWhat would you like to do?");

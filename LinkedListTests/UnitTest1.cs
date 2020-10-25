@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CustomLinkedList;
+using Microsoft.Extensions.DependencyModel;
 
 namespace LinkedListTests
 {
@@ -89,6 +90,44 @@ namespace LinkedListTests
     }
 
     [TestClass]
+    public class InsertBefore_Should
+    {
+        [TestMethod]
+        public void ShouldBePointedToFromTargetNode_WhenInsertSucceeds()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> nodeNew;
+            LinkedListNode<string> existingNode;
+
+            existingNode = list.InsertFirst(new LinkedListNode<string>("First"));
+
+            //Act
+            nodeNew = list.InsertBefore(new LinkedListNode<string>("Next"), existingNode);
+
+            //Assert
+            Assert.AreEqual(existingNode.Prev, nodeNew);
+            Assert.AreEqual(nodeNew.Next, existingNode);
+        }
+
+        [TestMethod]
+        public void ShouldPointToPreviousPrev_WhenInsertSucceeds()
+        {
+            //Arrange
+            CustomLinkedList<string> list = new CustomLinkedList<string>();
+            LinkedListNode<string> nodeInBetween;
+            LinkedListNode<string> firstNode = list.InsertFirst(new LinkedListNode<string>("Front"));
+            LinkedListNode<string> lastNode = list.InsertAfter(new LinkedListNode<string>("Back"), firstNode);
+
+            //Act
+            nodeInBetween = list.InsertBefore(new LinkedListNode<string>("InBetween"), lastNode);
+
+            //Assert
+            Assert.AreEqual(nodeInBetween.Prev, firstNode);
+            Assert.AreEqual(firstNode.Next, nodeInBetween);
+        }
+    }
+    [TestClass]
     public class InsertAfter_Should
     {
         [TestMethod]
@@ -106,6 +145,7 @@ namespace LinkedListTests
 
             //Assert
             Assert.AreEqual(existingNode.Next, nodeNew);
+            Assert.AreEqual(nodeNew.Prev, existingNode);
         }
 
         [TestMethod]
@@ -114,16 +154,16 @@ namespace LinkedListTests
             //Arrange
             CustomLinkedList<string> list = new CustomLinkedList<string>();
             LinkedListNode<string> nodeInBetween;
-            LinkedListNode<string> nodeAhead = list.InsertFirst(new LinkedListNode<string>("Ahead"));
-            LinkedListNode<string> nodeBehind = list.InsertAfter(new LinkedListNode<string>("Behind"), nodeAhead);
+            LinkedListNode<string> firstNode = list.InsertFirst(new LinkedListNode<string>("Front"));
+            LinkedListNode<string> lastNode = list.InsertAfter(new LinkedListNode<string>("Back"), firstNode);
 
             //Act
-            nodeInBetween = list.InsertAfter(new LinkedListNode<string>("InBetween"), nodeAhead);
+            nodeInBetween = list.InsertAfter(new LinkedListNode<string>("InBetween"), firstNode);
 
             //Assert
-            Assert.AreEqual(nodeInBetween.Next, nodeBehind);
+            Assert.AreEqual(nodeInBetween.Next, lastNode);
+            Assert.AreEqual(lastNode.Prev, nodeInBetween);
         }
-
     }
 
     [TestClass]
@@ -240,7 +280,7 @@ namespace LinkedListTests
     public class Remove_Should
     {
         [TestMethod]
-        public void ChangePrevNextPointer_WhenThereSomethingToRemove()
+        public void ChangePrevNextPointerOfTwoNodes_WhenThereSomethingToRemove()
         {
             //Arrange
             CustomLinkedList<string> list = new CustomLinkedList<string>();
@@ -257,7 +297,8 @@ namespace LinkedListTests
             list.Remove(doomedNode);
 
             //Assert
-            Assert.AreEqual(previousNode.Next.Data, "Three");
+            Assert.AreEqual(doomedNode.Prev.Next, doomedNode.Next, "Two points to Four");
+            Assert.AreEqual(doomedNode.Next.Prev, doomedNode.Prev, "Four points to Two"); 
             Assert.AreEqual(count - 1, list.Count);
         }
 
@@ -315,6 +356,7 @@ namespace LinkedListTests
 
             //Assert
             Assert.IsNull(list.First, "First node should be null");
+            Assert.IsNull(list.Last, "Last node should be null");
             Assert.AreEqual(0, list.Count, "Count should be zero.");
         }
     }
