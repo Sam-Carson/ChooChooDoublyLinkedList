@@ -285,7 +285,7 @@ namespace ChooChoo
                 else
                 {
                     valid = true;
-                    newCar = railcars.InsertFirst(new LinkedListNode<string>(carTypeAbbreviations[index] + carCount++));                        //This generates a name for the railcar:
+                    newCar = railcars.InsertLast(new LinkedListNode<string>(carTypeAbbreviations[index] + carCount++));                        //This generates a name for the railcar:
                     //BTW, the postfix incrementer on carCount means that carCount
                     //is not incremented until AFTER the statement concludes.
                     

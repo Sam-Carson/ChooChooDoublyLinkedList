@@ -67,6 +67,7 @@ namespace CustomLinkedList
                 newNode.Prev.Next = newNode;
                 Last = newNode;
             }
+            Count++;
             return newNode;
         }
 
@@ -172,6 +173,7 @@ namespace CustomLinkedList
                 doomedNode.Next = null;
                 doomedNode.Prev = null;
             }
+            Count--;
             return doomedNode;
         }
 
